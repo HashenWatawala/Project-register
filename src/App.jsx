@@ -3,6 +3,7 @@ import Header3 from './components/Navbar'
 import TriangleBackgroundView from './components/Home'
 import Header from './components/Navbar'
 import About from './components/About'
+import PdfUploader from './components/PDFuploader'
 
 
 const App = () => {
@@ -11,6 +12,7 @@ const App = () => {
       <Header/>
       <div> <TriangleBackgroundView/></div>
      <div><About/></div>
+     <div><PdfUploader/></div>
     </div>
   )
 }

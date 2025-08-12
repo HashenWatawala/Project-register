@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { SplittingText } from "./Splitting-text";
+import StatCards from "./StatCards";
 
 // Triangle component (white or black triangle depending on theme)
 const Triangle = ({ style, fillColor }) => (
@@ -24,7 +26,9 @@ const TriangleBackground = ({ fillColor }) => {
       top: `${Math.random() * 100}%`,
       animationDuration: `${Math.random() * 20 + 10}s`,
       animationDelay: `${Math.random() * 10}s`,
-      transform: `scale(${Math.random() * 0.5 + 0.5}) rotate(${Math.random() * 360}deg)`
+      transform: `scale(${Math.random() * 0.5 + 0.5}) rotate(${
+        Math.random() * 360
+      }deg)`,
     }));
     setTriangles(tempTriangles);
   }, []);
@@ -63,6 +67,15 @@ const TriangleBackground = ({ fillColor }) => {
 export default function TriangleBackgroundView() {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
+  const [userCount, setUserCount] = useState(0);
+  const [pdfCount, setPdfCount] = useState(0);
+
+  setTimeout(() => {
+    setUserCount(1234);
+    setPdfCount(567);
+  }, 1000);
+
+
   useEffect(() => {
     const isDark = document.documentElement.classList.contains("dark");
     setIsDarkMode(isDark);
@@ -72,7 +85,10 @@ export default function TriangleBackgroundView() {
       setIsDarkMode(newDark);
     });
 
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
 
     return () => observer.disconnect();
   }, []);
@@ -87,11 +103,34 @@ export default function TriangleBackgroundView() {
       <div className="relative z-10 flex items-center justify-center h-full">
         <div className="text-center px-4">
           <h1 className="text-4xl font-bold md:text-6xl lg:text-8xl">
-            Welcome to project rights!
+            <SplittingText
+              text="Welcome to project rights!"
+              type="chars"
+              inView
+              motionVariants={{
+                initial: { y: 20, opacity: 0 },
+                animate: { y: 0, opacity: 1 },
+                transition: { duration: 0.5 },
+                stagger: 0.05,
+              }}
+            />
           </h1>
           <p className="mt-4 text-lg md:text-xl text-slate-600 dark:text-slate-300">
-            Randomly floating triangle pattern with parallax effect.
+            <SplittingText
+              text="Randomly floating triangle pattern with parallax effect."
+              type="words"
+              inView
+              motionVariants={{
+                initial: { y: 10, opacity: 0 },
+                animate: { y: 0, opacity: 1 },
+                transition: { duration: 0.4 },
+                stagger: 0.15,
+              }}
+              delay={300} // starts after the heading animates
+            />
           </p>
+          {/* Use the StatCards component here */}
+        <StatCards userCount={userCount} pdfCount={pdfCount} />
         </div>
       </div>
     </div>

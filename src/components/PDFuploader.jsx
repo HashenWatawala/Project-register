@@ -2,8 +2,11 @@
 
 import React, { useState } from "react";
 import Message from "./Message";
+import GradientView from './Gradiant-text';
+import { GradientText } from './Gradiant-text';
+import GlowLine from './Glow-line'; // Your Gradient component
 
-export default function PdfUploader() {
+export default function UploadPage() {
   const [pdfName, setPdfName] = useState("");
   const [pdfId, setPdfId] = useState("");
   const [summary, setSummary] = useState("");
@@ -24,7 +27,6 @@ export default function PdfUploader() {
     setError("");
     setSelectedFile(file);
 
-    // Clear old data
     setPdfName("");
     setPdfId("");
     setSummary("");
@@ -50,9 +52,7 @@ export default function PdfUploader() {
         body: formData,
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to upload PDF.");
-      }
+      if (!response.ok) throw new Error("Failed to upload PDF.");
 
       const data = await response.json();
 
@@ -60,12 +60,9 @@ export default function PdfUploader() {
       setPdfId(data.pdfId);
       setSummary(data.summary);
 
-      // Detect backend message type
-      if (data.message?.toLowerCase().includes("duplicate")) {
-        setStatusType("warning");
-      } else {
-        setStatusType("success");
-      }
+      setStatusType(
+        data.message?.toLowerCase().includes("duplicate") ? "warning" : "success"
+      );
       setStatusMessage(data.message || "Upload successful!");
     } catch (err) {
       console.error("❌ Upload Error:", err);
@@ -76,7 +73,7 @@ export default function PdfUploader() {
     }
   };
 
-  // Reset form when clicking "Complete"
+  // Reset form
   const handleComplete = () => {
     setSelectedFile(null);
     setPdfName("");
@@ -91,70 +88,93 @@ export default function PdfUploader() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-white px-6 py-12">
-      <div className="max-w-md ml-0 md:ml-6 p-6 border rounded-lg shadow-lg bg-white dark:bg-gray-800">
-        <h2 className="text-xl font-bold mb-2">Upload a PDF</h2>
+      <div className="relative w-full h-1 mb-12">
+        <GlowLine orientation="horizontal" position={0} color="blue" />
+      </div>
 
-        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-          Select a PDF file from your device. After uploading, a unique PDF ID
-          will be generated and its summary will be shown.
-        </p>
+      <div className="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto">
 
-        <input
-          id="pdf-upload-input"
-          type="file"
-          accept="application/pdf"
-          onChange={handleFileChange}
-          disabled={loading}
-          className="mb-4 block w-full text-sm text-gray-700 dark:text-gray-300 
-            file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm 
-            file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-        />
+        
+        {/* PDF Uploader Card */}
+        <div className="flex-1 p-6 border rounded-lg shadow-lg bg-white dark:bg-gray-800 flex flex-col justify-between">
+          <div>
+            <h2 className="text-xl font-bold mb-2">Upload a PDF</h2>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+              Select a PDF file from your device. After uploading, a unique PDF ID
+              will be generated and its summary will be shown.
+            </p>
 
-        <div className="flex gap-4 mb-4">
-          <button
-            type="button"
-            onClick={uploadFile}
-            disabled={loading || !selectedFile}
-            className="px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50"
-          >
-            {loading ? "Uploading..." : "Upload"}
-          </button>
+            <input
+              id="pdf-upload-input"
+              type="file"
+              accept="application/pdf"
+              onChange={handleFileChange}
+              disabled={loading}
+              className="mb-4 block w-full text-sm text-gray-700 dark:text-gray-300 
+                file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm 
+                file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+            />
 
-          <button
-            type="button"
-            onClick={handleComplete}
-            className="px-4 py-2 bg-gray-600 text-white rounded"
-          >
-            Complete
-          </button>
+            <div className="flex gap-4 mb-4">
+              <button
+                type="button"
+                onClick={uploadFile}
+                disabled={loading || !selectedFile}
+                className="px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50"
+              >
+                {loading ? "Uploading..." : "Upload"}
+              </button>
+
+              <button
+                type="button"
+                onClick={handleComplete}
+                className="px-4 py-2 bg-gray-600 text-white rounded"
+              >
+                Complete
+              </button>
+            </div>
+
+            {statusMessage && <Message type={statusType}>{statusMessage}</Message>}
+            {error && <Message type="error">{error}</Message>}
+
+            {pdfName && pdfId && (
+              <div className="mt-4 space-y-3">
+                <div>
+                  <p className="text-gray-800 dark:text-gray-200">
+                    <strong>PDF Name:</strong> {pdfName}
+                  </p>
+                  <p className="text-gray-800 dark:text-gray-200">
+                    <strong>PDF ID:</strong> {pdfId}
+                  </p>
+                </div>
+
+                <div className="p-3 rounded border bg-gray-100 dark:bg-gray-700 text-sm text-gray-900 dark:text-gray-100">
+                  <strong>Summary:</strong>
+                  <p className="mt-1 whitespace-pre-line">{summary}</p>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Status message */}
-        {statusMessage && (
-          <Message type={statusType}>{statusMessage}</Message>
-        )}
-
-        {/* Error message */}
-        {error && <Message type="error">{error}</Message>}
-
-        {/* PDF details */}
-        {pdfName && pdfId && (
-          <div className="mt-4 space-y-3">
-            <div>
-              <p className="text-gray-800 dark:text-gray-200">
-                <strong>PDF Name:</strong> {pdfName}
-              </p>
-              <p className="text-gray-800 dark:text-gray-200">
-                <strong>PDF ID:</strong> {pdfId}
-              </p>
-            </div>
-
-            <div className="p-3 rounded border bg-gray-100 dark:bg-gray-700 text-sm text-gray-900 dark:text-gray-100">
-              <strong>Summary:</strong>
-              <p className="mt-1 whitespace-pre-line">{summary}</p>
-            </div>
+        {/* Description Card */}
+        <div className="flex-1 p-6 border rounded-lg shadow-lg bg-white dark:bg-gray-800 flex flex-col justify-center">
+          <div>
+            <h2 className="text-4xl font-semibold mb-6">
+              <GradientText>How This Uploader Works</GradientText>
+            </h2>
+            <p className="text-gray-700 dark:text-gray-300 mb-4 text-justify">
+              Easily upload your project proposal as a PDF to receive a quick
+              summary and a unique registration ID. This ensures your work is
+              securely stored and uniquely identified.
+            </p>
+            <p className="text-gray-700 dark:text-gray-300 text-justify">
+              Our tool also checks for similar submissions to avoid duplication,
+              helping you protect your original ideas and streamline project
+              tracking.
+            </p>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );

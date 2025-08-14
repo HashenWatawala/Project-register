@@ -29,12 +29,15 @@ const About = () => {
       
 
       {/* Image and Description */}
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        <img
-          src={aboutImage} // replace with your PNG path
-          alt="Team collaboration"
-          className="w-full rounded-xl shadow-xl"
-        />
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center bg-transparent">
+        <div className="relative">
+          <img
+            src={aboutImage}
+            alt="Team collaboration"
+            className="w-full"
+            style={{ background: 'transparent' }}
+          />
+        </div>
         <div>
           <h2 className="text-2xl font-semibold mb-8">
             <GradientView />

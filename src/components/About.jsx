@@ -9,7 +9,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { motion } from "framer-motion";
 
-const MissionSection = () => {
+const About = () => {
   const fadeUpVariants = {
     offscreen: { opacity: 0, y: 50 },
     onscreen: { opacity: 1, y: 0 },
@@ -83,9 +83,9 @@ const MissionSection = () => {
       transition={{ duration: 1.2, ease: "easeOut" }}
       variants={fadeUpVariants}
     >
-        <h2 className="text-4xl md:text-6xl font-semibold mb-4">
+        <h2 className="text-4xl md:text-6xl font-semibold mb-4 text-center">
           <GradientText>
-            <div className="p-4">Our Mission</div>
+            <span className="p-4">Our Mission</span>
           </GradientText>
         </h2>
         <p className="text-gray-600 dark:text-gray-400">

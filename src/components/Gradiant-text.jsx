@@ -31,7 +31,7 @@ function GradientText({
         }}
       />
       <div
-        className={`relative mx-auto flex max-w-max flex-row items-center justify-center font-medium backdrop-blur transition-shadow duration-500 overflow-visible cursor-pointer break-words whitespace-normal ${className}`}
+        className={`relative inline-flex max-w-max items-center font-medium ... ${className}`}
       >
         {showBorder && (
           <div

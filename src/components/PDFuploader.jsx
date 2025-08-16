@@ -91,9 +91,14 @@ export default function UploadPage() {
       <div className="relative w-full h-1 mb-12">
         <GlowLine orientation="horizontal" position={0} color="blue" />
       </div>
-
+      <div className="max-w-4xl mx-auto">
+      <h2 className="text-4xl md:text-8xl font-light mb-6 text-left">
+          <GradientText>
+            <span className="block">Upload Your PDF Here...</span>
+          </GradientText>
+        </h2>
+      </div>
       <div className="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto">
-
         
         {/* PDF Uploader Card */}
         <div className="flex-1 p-6 border rounded-lg shadow-lg bg-white dark:bg-gray-800 flex flex-col justify-between">

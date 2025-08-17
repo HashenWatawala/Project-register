@@ -15,19 +15,19 @@ export default function ContactPage() {
 
       {/* Page Title */}
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-4xl md:text-8xl font-light mb-6 text-left">
-          <GradientText>
-            <span className="block pb-8 pl-0">Contact Us</span>
-          </GradientText>
-        </h2>
+        
       </div>
 
       {/* Contact Section */}
       <div className="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto">
         
         {/* Left: Contact Info */}
-        <div className="flex-1 p-6 rounded-lg">
-          <h2 className="text-2xl font-semibold mb-4">Get in Touch</h2>
+        <div className="flex-1 p-6 rounded-lg flex flex-col justify-center">
+        <h2 className="text-4xl md:text-8xl font-light mb-6 text-left">
+          <GradientText>
+            <span className="block pb-8 pl-0">Contact Us</span>
+          </GradientText>
+        </h2>
           <p className="text-gray-700 dark:text-gray-300 mb-6">
             Have questions or feedback about the Project Register?  
             Reach us through the following:

@@ -5,6 +5,7 @@ import Header from './components/Navbar'
 import About from './components/About'
 import PdfUploader from './components/PDFuploader'
 import ContactPage from './components/ContactPage'
+import Footer2 from './components/Footer'
 
 
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
       <PdfUploader />
     </div>
     <div><ContactPage/></div>
+    <Footer2/>
     </div>
   )
 }

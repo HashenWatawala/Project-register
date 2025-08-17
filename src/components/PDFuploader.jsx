@@ -4,7 +4,9 @@ import React, { useState } from "react";
 import Message from "./Message";
 import GradientView from './Gradiant-text';
 import { GradientText } from './Gradiant-text';
-import GlowLine from './Glow-line'; // Your Gradient component
+import GlowLine from './Glow-line';
+
+ // Your Gradient component
 
 export default function UploadPage() {
   const [pdfName, setPdfName] = useState("");
@@ -94,7 +96,7 @@ export default function UploadPage() {
       <div className="max-w-4xl mx-auto">
       <h2 className="text-4xl md:text-8xl font-light mb-6 text-left">
           <GradientText>
-            <span className="block">Upload Your PDF Here...</span>
+            <span className="block pb-8 pl-0">Upload Your PDF Here...</span>
           </GradientText>
         </h2>
       </div>

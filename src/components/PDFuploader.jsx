@@ -6,6 +6,8 @@ import GradientView from "./Gradiant-text";
 import { GradientText } from "./Gradiant-text";
 import GlowLine from "./Glow-line";
 import AnimatedBackground from "./AnimatedBackground"; // p5.js animated background
+import BouncyText from "./BouncyView.jsx";
+import { motion } from "framer-motion";
 
 export default function UploadPage() {
   const [pdfName, setPdfName] = useState("");
@@ -16,6 +18,20 @@ export default function UploadPage() {
   const [statusType, setStatusType] = useState("");
   const [loading, setLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+    hover: {
+      scale: 1.02,
+      boxShadow:
+        "0 0 20px rgba(59, 130, 246, 0.5), 0 0 40px rgba(59, 130, 246, 0.3)",
+    },
+  };
 
   // Handle file selection
   const handleFileChange = (e) => {
@@ -62,7 +78,9 @@ export default function UploadPage() {
       setSummary(data.summary);
 
       setStatusType(
-        data.message?.toLowerCase().includes("duplicate") ? "warning" : "success"
+        data.message?.toLowerCase().includes("duplicate")
+          ? "warning"
+          : "success"
       );
       setStatusMessage(data.message || "Upload successful!");
     } catch (err) {
@@ -101,19 +119,40 @@ export default function UploadPage() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl md:text-8xl font-light mb-6 text-left">
             <GradientText>
-              <span className="block pb-8 pl-0">Upload Your PDF Here...</span>
+              <span className="block pb-8 pl-0">
+                <BouncyText text="Upload Your PDF Here..." />
+              </span>
             </GradientText>
           </h2>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto">
+        <motion.div
+          className="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.3 }} // both animate together when ~30% visible
+          variants={{
+            hidden: { opacity: 0, y: 50 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.7, ease: "easeOut" },
+            },
+          }}
+        >
           {/* PDF Uploader Card */}
-          <div className="flex-1 p-6 border rounded-lg shadow-lg bg-white dark:bg-gray-800 flex flex-col justify-between">
+          <motion.div
+            className="flex-1 p-6 border rounded-lg shadow-lg bg-white dark:bg-gray-800 flex flex-col justify-between"
+            variants={cardVariants}
+            initial="hidden"
+            animate="visible"
+            whileHover="hover"
+          >
             <div>
-              <h2 className="text-xl font-bold mb-2">Upload a PDF</h2>
+              <h2 className="text-xl mb-2">Upload a PDF</h2>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                Select a PDF file from your device. After uploading, a unique PDF ID
-                will be generated and its summary will be shown.
+                Select a PDF file from your device. After uploading, a unique
+                PDF ID will be generated and its summary will be shown.
               </p>
 
               <input
@@ -169,10 +208,17 @@ export default function UploadPage() {
                 </div>
               )}
             </div>
-          </div>
+          </motion.div>
 
           {/* Description Card */}
-          <div className="flex-1 p-6 border rounded-lg shadow-lg bg-white dark:bg-gray-800 flex flex-col justify-center">
+          <motion.div
+            className="flex-1 p-6 border rounded-lg shadow-lg bg-white dark:bg-gray-800 flex flex-col justify-center"
+            variants={cardVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            whileHover="hover"
+          >
             <div>
               <h2 className="text-4xl font-semibold mb-6">
                 <GradientText>How This Uploader Works</GradientText>
@@ -183,13 +229,13 @@ export default function UploadPage() {
                 securely stored and uniquely identified.
               </p>
               <p className="text-gray-700 dark:text-gray-300 text-justify">
-                Our tool also checks for similar submissions to avoid duplication,
-                helping you protect your original ideas and streamline project
-                tracking.
+                Our tool also checks for similar submissions to avoid
+                duplication, helping you protect your original ideas and
+                streamline project tracking.
               </p>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </div>
   );

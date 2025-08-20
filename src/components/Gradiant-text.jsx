@@ -31,7 +31,7 @@ function GradientText({
         }}
       />
       <div
-        className={`relative inline-flex max-w-max items-center font-medium ... ${className}`}
+        className={`relative inline-flex max-w-max items-center font-normal ... ${className}`}
       >
         {showBorder && (
           <div
@@ -67,7 +67,7 @@ function GradientText({
 const GradientView = () => {
   return (
     <div className="text-2xl font-semibold mb-8 break-words leading-snug p-4">
-      <GradientText className="text-4xl md:text-6xl font-bold">
+      <GradientText className="text-4xl md:text-6xl font-light">
         <div className="p-4">Why we build this</div>
       </GradientText>
     </div>

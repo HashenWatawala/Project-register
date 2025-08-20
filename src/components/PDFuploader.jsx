@@ -149,7 +149,7 @@ export default function UploadPage() {
             whileHover="hover"
           >
             <div>
-              <h2 className="text-xl mb-2">Upload a PDF</h2>
+              <h2 className="text-xl font-light mb-2">Upload a PDF</h2>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
                 Select a PDF file from your device. After uploading, a unique
                 PDF ID will be generated and its summary will be shown.

@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const BouncyText = ({ text = "Bouncy Animation" }) => {
   return (
-    <h2 className="text-4xl md:text-6xl font-bold text-center leading-none">
+    <h2 className="text-4xl md:text-6xl font-light text-center leading-none">
   {text.split("").map((char, i) => (
     <motion.span
       key={i}

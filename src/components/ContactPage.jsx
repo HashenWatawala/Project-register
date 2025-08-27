@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { motion } from "framer-motion";
 import GlowLine from "./Glow-line";
 import { GradientText } from "./Gradiant-text";
 
@@ -14,22 +15,33 @@ export default function ContactPage() {
       </div>
 
       {/* Page Title */}
-      <div className="max-w-4xl mx-auto">
-        
-      </div>
+      <div className="max-w-4xl mx-auto"></div>
 
       {/* Contact Section */}
       <div className="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto">
         
-        {/* Left: Contact Info */}
-        <div className="flex-1 p-6 rounded-lg flex flex-col justify-center">
-        <h2 className="text-4xl md:text-8xl font-light mb-6 text-left">
-          <GradientText>
-            <span className="block pb-8 pl-0">Contact Us</span>
-          </GradientText>
-        </h2>
+        {/* Left: Contact Info with animation */}
+        <motion.div
+          className="flex-1 p-6 rounded-lg flex flex-col justify-center"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.3 }}
+          variants={{
+            hidden: { opacity: 0, y: 50 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.7, ease: "easeOut" },
+            },
+          }}
+        >
+          <h2 className="text-4xl md:text-8xl font-light mb-6 text-left">
+            <GradientText>
+              <span className="block pb-8 pl-0">Contact Us</span>
+            </GradientText>
+          </h2>
           <p className="text-gray-700 dark:text-gray-300 mb-6">
-            Have questions or feedback about the Project Register?  
+            Have questions or feedback about the Project Register?
             Reach us through the following:
           </p>
 
@@ -47,9 +59,9 @@ export default function ContactPage() {
               <span>Colombo, Sri Lanka</span>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Right: Contact Form */}
+        {/* Right: Contact Form (no animation) */}
         <div className="flex-1 p-6 border rounded-lg shadow-lg bg-white dark:bg-gray-800">
           <form className="space-y-6">
             <div>

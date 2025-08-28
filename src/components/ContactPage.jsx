@@ -6,6 +6,10 @@ import { motion } from "framer-motion";
 import GlowLine from "./Glow-line";
 import { GradientText } from "./Gradiant-text";
 
+const fadeUpVariants = {
+  offscreen: { opacity: 0, y: 50 },
+  onscreen: { opacity: 1, y: 0 },
+};
 export default function ContactPage() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-white px-6 py-12">
@@ -62,7 +66,12 @@ export default function ContactPage() {
         </motion.div>
 
         {/* Right: Contact Form (no animation) */}
-        <div className="flex-1 p-6 border rounded-lg shadow-lg bg-white dark:bg-gray-800">
+        <motion.div className="flex-1 p-6 border rounded-lg shadow-lg bg-white dark:bg-gray-800"
+  initial={{ opacity: 0, x: 100 }}         // start offscreen right
+  whileInView={{ opacity: 1, x: 0 }}       // animate into view
+  exit={{ opacity: 0, x: 100 }}            // animate out (optional, for page transitions)
+  transition={{ duration: 1.2, ease: "easeOut" }}
+  viewport={{ once: false, amount: 0.2 }}>
           <form className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -107,7 +116,7 @@ export default function ContactPage() {
               Send Message
             </button>
           </form>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

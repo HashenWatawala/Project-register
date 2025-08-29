@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import Modal from "./Modal"; // import modal
+import Login2 from "./UserLogin";
 
 // Icons
 const MenuIcon = ({ className }) => (
@@ -64,6 +65,7 @@ const MoonIcon = ({ className }) => (
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   const navLinks = [
     { href: "#home", label: "Home" },
@@ -124,12 +126,12 @@ const Header = () => {
 
             {/* Right-side Controls */}
             <div className="flex items-center gap-4">
-              <a
-                href="#"
+            <button
+                onClick={() => setIsLoginOpen(true)}  // <-- open modal
                 className="hidden sm:inline-flex px-4 py-2 rounded-md bg-white text-black text-sm font-semibold hover:bg-gray-100 transition"
               >
-                Get Started
-              </a>
+                Login
+              </button>
 
               <button
                 onClick={toggleTheme}
@@ -159,15 +161,15 @@ const Header = () => {
         {/* Mobile Menu Dropdown (inside blurred area) */}
         {isMenuOpen && (
           <div className="md:hidden border-t border-white/20 dark:border-white/10 px-4 py-6 flex flex-col gap-4 text-white text-lg">
-            {navLinks.map(link => (
-  <a
-    key={link.label}
-    href={link.href}
-    className="w-full text-center hover:text-gray-300 transition"
-  >
-    {link.label}
-  </a>
-))}
+            {navLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className="w-full text-center hover:text-gray-300 transition"
+              >
+                {link.label}
+              </a>
+            ))}
             <a
               href="#"
               className="w-full text-center bg-white text-black font-semibold py-2 rounded-md hover:bg-gray-100 transition"
@@ -175,8 +177,12 @@ const Header = () => {
               Get Started
             </a>
           </div>
+          
         )}
       </div>
+      <Modal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)}>
+        <Login2 />
+      </Modal>
     </header>
   );
 };

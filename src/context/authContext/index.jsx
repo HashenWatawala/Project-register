@@ -1,8 +1,8 @@
-import { use, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import React from "react";
 
-import { auth } from "../../firebase/auth";
-import { onAuthStateChanged } from "firebase/auth";
-import { initializeAnalytics } from "firebase/analytics";
+
+import { auth } from "../../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
 const AuthContext = React.createContext();
@@ -38,5 +38,6 @@ export function AuthProvider({children}){
         <AuthContext.Provider value={value}>
             {!loading && children}
         </AuthContext.Provider>
-    )
+    );
 }
+export const useAuth = () => useContext(AuthContext);

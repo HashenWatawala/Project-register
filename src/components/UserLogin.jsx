@@ -3,6 +3,7 @@
 import React, { useState, useContext } from "react";
 import { doSignWithUserWithEmailAndPassword, doSignInWithGoogle } from "../firebase/auth";
 import { useAuth } from "../context/authContext/index";
+import { doSignOut } from "../firebase/auth";
 
 const ArrowBoxIcon = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M14 10L20 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from "react";
 import Modal from "./Modal"; // import modal
 import Login2 from "./UserLogin";
+import { useAuth } from "../context/authContext/index";
+import { doSignOut } from "../firebase/auth";
 
 // Icons
 const MenuIcon = ({ className }) => (
@@ -66,6 +68,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const { userLoggedIn, currentUser } = useAuth();
 
   const navLinks = [
     { href: "#home", label: "Home" },
@@ -73,6 +76,14 @@ const Header = () => {
     { href: "#upload", label: "Upload" },
     { href: "#contact", label: "Contact" },
   ];
+  const handleLogout = async () => {
+    try {
+      await doSignOut();
+      console.log("✅ Logged out successfully");
+    } catch (error) {
+      console.error("❌ Logout error:", error);
+    }
+  };
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -126,33 +137,34 @@ const Header = () => {
 
             {/* Right-side Controls */}
             <div className="flex items-center gap-4">
-            <button
-                onClick={() => setIsLoginOpen(true)}  // <-- open modal
-                className="hidden sm:inline-flex px-4 py-2 rounded-md bg-white text-black text-sm font-semibold hover:bg-gray-100 transition"
-              >
-                Login
-              </button>
+              {userLoggedIn ? (
+                <button
+                  onClick={handleLogout}
+                  className="hidden sm:inline-flex px-4 py-2 rounded-md bg-red-600 text-white text-sm font-semibold hover:bg-red-700 transition"
+                >
+                  Logout
+                </button>
+              ) : (
+                <button
+                  onClick={() => setIsLoginOpen(true)}
+                  className="hidden sm:inline-flex px-4 py-2 rounded-md bg-white text-black text-sm font-semibold hover:bg-gray-100 transition"
+                >
+                  Login
+                </button>
+              )}
 
               <button
                 onClick={toggleTheme}
                 className="p-2 rounded-md text-white hover:bg-white/10 transition"
               >
-                {isDarkMode ? (
-                  <SunIcon className="w-5 h-5" />
-                ) : (
-                  <MoonIcon className="w-5 h-5" />
-                )}
+                {isDarkMode ? <SunIcon className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
               </button>
 
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="md:hidden p-2 rounded-md text-white hover:bg-white/10 transition"
               >
-                {isMenuOpen ? (
-                  <XIcon className="w-6 h-6" />
-                ) : (
-                  <MenuIcon className="w-6 h-6" />
-                )}
+                {isMenuOpen ? <XIcon className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
               </button>
             </div>
           </div>
